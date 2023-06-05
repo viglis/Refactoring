@@ -15,7 +15,7 @@ data class Customer(
 
         rentals.forEach { rental ->
             // 비디오 종류별 대여료 계산
-            val thisAmount = amountFor(rental)
+            val thisAmount = rental.getCharge()
 
             // 적립 포인트 1 포인트 증가
             frequentRenterPoints++
@@ -36,9 +36,5 @@ data class Customer(
         result += "누적 대여료: $totalAmount\n"
         result += "적립 포인트: $frequentRenterPoints"
         return result
-    }
-
-    private fun amountFor(rental: Rental): Double {
-        return rental.getCharge()
     }
 }
