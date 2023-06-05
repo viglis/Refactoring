@@ -39,24 +39,24 @@ data class Customer(
     }
 
     private fun amountFor(rental: Rental): Double {
-        var thisAmount = 0.0
+        var result = 0.0
         when (rental.movie.priceCode) {
             Movie.REGULAR -> {
-                thisAmount += 2
+                result += 2
                 if (rental.daysRented > 2) {
-                    thisAmount += (rental.daysRented - 2) * 1.5
+                    result += (rental.daysRented - 2) * 1.5
                 }
             }
             Movie.NEW_RELEASE -> {
-                thisAmount += rental.daysRented * 3
+                result += rental.daysRented * 3
             }
             Movie.CHILDRENS -> {
-                thisAmount += 1.5
+                result += 1.5
                 if (rental.daysRented > 3) {
-                    thisAmount += (rental.daysRented - 3) * 1.5
+                    result += (rental.daysRented - 3) * 1.5
                 }
             }
         }
-        return thisAmount
+        return result
     }
 }
