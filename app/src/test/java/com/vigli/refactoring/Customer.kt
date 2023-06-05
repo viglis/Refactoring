@@ -14,14 +14,8 @@ data class Customer(
         var result = "$name 고객님의 대여 기록\n"
 
         rentals.forEach { rental ->
-            // 적립 포인트 1 포인트 증가
-            frequentRenterPoints++
-            // 최신물을 이틀 이상 대여하면 보너스 포인트 지급
-            if (rental.movie.priceCode == Movie.NEW_RELEASE &&
-                rental.daysRented > 1
-            ) {
-                frequentRenterPoints++
-            }
+            // 경우에 따른 적립 포인트 지급 함수를 호출
+            frequentRenterPoints += rental.getFrequentRenterPoints()
 
             // 이번에 대여하는 비디오 정보와 대여료를 출력
             result += "\t${rental.movie.title}\t${rental.getCharge()}\n"

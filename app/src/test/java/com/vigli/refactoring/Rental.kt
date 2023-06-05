@@ -25,4 +25,14 @@ data class Rental(
         }
         return result
     }
+
+    fun getFrequentRenterPoints(): Int {
+        // 최신물을 이틀 이상 대여하면 보너스 포인트 지급
+        if (movie.priceCode == Movie.NEW_RELEASE &&
+            daysRented > 1
+        ) {
+            return 2
+        }
+        return 1
+    }
 }
