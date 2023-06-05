@@ -9,7 +9,6 @@ data class Customer(
     }
 
     fun statement(): String {
-        var totalAmount = 0.0
         var frequentRenterPoints = 0
         var result = "$name 고객님의 대여 기록\n"
 
@@ -19,13 +18,19 @@ data class Customer(
 
             // 이번에 대여하는 비디오 정보와 대여료를 출력
             result += "\t${rental.movie.title}\t${rental.getCharge()}\n"
-            // 현재까지 누적된 총 대여료
-            totalAmount += rental.getCharge()
         }
 
         // 푸터 행 추가
-        result += "누적 대여료: $totalAmount\n"
+        result += "누적 대여료: ${getTotalCharge()}\n"
         result += "적립 포인트: $frequentRenterPoints"
+        return result
+    }
+
+    private fun getTotalCharge(): Double {
+        var result = 0.0
+        rentals.forEach { rental ->
+            result += rental.getCharge()
+        }
         return result
     }
 }
