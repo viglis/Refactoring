@@ -14,26 +14,8 @@ data class Customer(
         var result = "$name 고객님의 대여 기록\n"
 
         rentals.forEach { rental ->
-            var thisAmount = 0.0
-
             // 비디오 종류별 대여료 계산
-            when (rental.movie.priceCode) {
-                Movie.REGULAR -> {
-                    thisAmount += 2
-                    if (rental.daysRented > 2) {
-                        thisAmount += (rental.daysRented - 2) * 1.5
-                    }
-                }
-                Movie.NEW_RELEASE -> {
-                    thisAmount += rental.daysRented * 3
-                }
-                Movie.CHILDRENS -> {
-                    thisAmount += 1.5
-                    if (rental.daysRented > 3) {
-                        thisAmount += (rental.daysRented - 3) * 1.5
-                    }
-                }
-            }
+            val thisAmount = amountFor(rental)
 
             // 적립 포인트 1 포인트 증가
             frequentRenterPoints++
@@ -54,5 +36,27 @@ data class Customer(
         result += "누적 대여료: $totalAmount\n"
         result += "적립 포인트: $frequentRenterPoints"
         return result
+    }
+
+    private fun amountFor(rental: Rental): Double {
+        var thisAmount = 0.0
+        when (rental.movie.priceCode) {
+            Movie.REGULAR -> {
+                thisAmount += 2
+                if (rental.daysRented > 2) {
+                    thisAmount += (rental.daysRented - 2) * 1.5
+                }
+            }
+            Movie.NEW_RELEASE -> {
+                thisAmount += rental.daysRented * 3
+            }
+            Movie.CHILDRENS -> {
+                thisAmount += 1.5
+                if (rental.daysRented > 3) {
+                    thisAmount += (rental.daysRented - 3) * 1.5
+                }
+            }
+        }
+        return thisAmount
     }
 }
