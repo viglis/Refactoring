@@ -1,6 +1,21 @@
 package com.vigli.refactoring
 
 data class Movie(val title: String, var priceCode: Int) {
+    private var price: Price = when (priceCode) {
+        REGULAR -> {
+            RegularPrice()
+        }
+        NEW_RELEASE -> {
+            NewReleasePrice()
+        }
+        CHILDRENS -> {
+            ChildrensPrice()
+        }
+        else -> {
+            throw IllegalArgumentException("가격 코드가 잘못되었습니다.")
+        }
+    }
+
     fun getCharge(daysRented: Int): Double {
         var result = 0.0
         when (priceCode) {
