@@ -4,6 +4,10 @@ abstract class Price {
     abstract fun getPriceCode(): Int
 
     abstract fun getCharge(daysRented: Int): Double
+
+    open fun getFrequentRenterPoints(daysRented: Int): Int {
+        return 1
+    }
 }
 
 class ChildrensPrice : Price() {
@@ -27,6 +31,14 @@ class NewReleasePrice : Price() {
 
     override fun getCharge(daysRented: Int): Double {
         return daysRented * 3.0
+    }
+
+    override fun getFrequentRenterPoints(daysRented: Int): Int {
+        return if (daysRented > 1) {
+            2
+        } else {
+            1
+        }
     }
 }
 

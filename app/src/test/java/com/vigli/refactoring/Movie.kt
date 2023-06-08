@@ -21,13 +21,7 @@ data class Movie(val title: String, var priceCode: Int) {
     }
 
     fun getFrequentRenterPoints(daysRented: Int): Int {
-        // 최신물을 이틀 이상 대여하면 보너스 포인트 지급
-        if (priceCode == Movie.NEW_RELEASE &&
-            daysRented > 1
-        ) {
-            return 2
-        }
-        return 1
+        return price.getFrequentRenterPoints(daysRented)
     }
 
     companion object {
